@@ -356,12 +356,18 @@ a deep-learning method: TractSeg. </p>
 </div>
 
 <div>
-<p>Running tractography with the thalamus as a seed region will give us an estimate of <b> all </b> the white matter connections emanating from the thalamus. If we just want to map the optic radiation we will have to further constrain the tractography process with another ROI mask.  </p>
+<p>Running tractography with the thalamus as a seed region will give us an estimate of <b> all </b> the white matter connections emanating from the thalamus. If we just want to map the optic radiation we will have to further constrain the tractography process with further masks.  </p>
+</div>
+
+<p>To run the tractography we will be using <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/tckgen.html"> tckgen </a>. We will be using the <b>-include</b> and <b>-exclude</b> flags to retain and exclude streamlines, based on what we know about the trajectory of the optic radiation. </p>
+
+<div>
+<p>First of all, we want to make sure that we only include the streamlines that travel in a posterior direction (backwards) from the thalamus towards the visual cortex. We can use mrview to generate ROI planes. Go to Tool->ROI editor. </p>
 </div>
 
 
 
-<p>To run the tractography we will be using <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/tckgen.html"> tckgen </a>. </p>
+
 
 
 
