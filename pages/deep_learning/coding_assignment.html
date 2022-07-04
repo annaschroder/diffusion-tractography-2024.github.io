@@ -310,6 +310,7 @@ a deep-learning method: TractSeg. </p>
 <div style="text-align: center;">
 <figure>
 <img src="../../_static/img/optic_radiation_schematic.jpg" alt="colab" style="width:300px;">
+<img src="../../_static/img/optic_radiation.jpg" alt="colab" style="width:300px;">
 <figcaption>Fig.1 - a schematic of the optic radiation (source: Davion et all 2020, Brain Topography).</figcaption>
 </figure>
 </div>
@@ -343,7 +344,7 @@ a deep-learning method: TractSeg. </p>
 <p>Mrtrix requires a binary seed mask, so we will need to threshold and binarise the thalamus atlas to make our seed. You can experiment with different thresholds in mrview until you find one you are happy with. We will then use <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/mrthreshold.html"> mrthreshold</a> to generate the mask. Using the terminal, cd to the directory containing your data, and run the following:</p>
 </div>
 
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> mrthreshold -abs <your threshold value> Thalamus-prob-1mm.nii.gz thalamus_mask.nii.gz
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> mrthreshold -abs "your threshold value" Thalamus-prob-1mm.nii.gz thalamus_mask.nii.gz
 </pre></div>
 </div>
 
