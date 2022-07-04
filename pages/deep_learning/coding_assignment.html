@@ -294,7 +294,7 @@
               <div>
                 
   <div class="section" id="presentation-assignment">
-<h1>Presentation Assignment<a class="headerlink" href="#presentation-assignment" title="Permalink to this headline">¶</a></h1>
+<h1>Deep Learning Assignment<a class="headerlink" href="#presentation-assignment" title="Permalink to this headline">¶</a></h1>
 <p><em>by Ellie Thompson</em></p>
 <div class="tip admonition">
 <p class="admonition-title">Estimated Time</p>
@@ -346,6 +346,19 @@ a deep-learning method: TractSeg. </p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> mrthreshold -abs <your threshold value> Thalamus-prob-1mm.nii.gz thalamus_mask.nii.gz
 </pre></div>
 </div>
+
+<div style="text-align: center;">
+<figure>
+<img src="../../_static/img/mrview_thalamus.jpg" alt="colab" style="width:461px;height:350px;">
+<figcaption>Fig.3 - If you open your new thalamus mask as an overlay in mrview it should look something like this.</figcaption>
+</figure>
+</div>
+
+<div>
+<p>Running tractography with the thalamus as a seed region will give us an estimate of <b> all </b> the white matter connections emanating from the thalamus. If we just want to map the optic radiation we will have to further constrain the tractography process with another ROI mask.  </p>
+</div>
+
+
 
 <p>To run the tractography we will be using <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/tckgen.html"> tckgen </a>. </p>
 
