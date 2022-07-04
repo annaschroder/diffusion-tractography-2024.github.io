@@ -419,9 +419,19 @@ Save them as exclude_1.nii.gz, exclude_2.nii.gz, exclude_3.nii.gz and exclude_4.
 <p>Open the new tractography result in mrview and take a look. You should be able to clearly see the optic radiation bundles now, with fewer erroneous streamlines. </p>
 
 
-<p>We can now compare our results with the results from TractSeg. As we saw in the slides, TractSeg... We have already run TractSeg on this dataset and saved the results in "Peaks_FACT_trackings" to save time, but if you'd like try to running the pre-trained model yourself, you can find the instructions on the <a href="https://github.com/MIC-DKFZ/TractSeg"> TractSeg github page</a>.
+<p>We can now compare our results with the results from TractSeg. As we saw in the slides, TractSeg... We have already run TractSeg on this dataset and saved the results in the googledrive to save time. The tractography results are in "Peaks_FACT_trackings", and the optic radiation files are "OR_left.tck", and "OR_right.tck". Open them in mrview and compare to your results.</p>
 
+<div style="text-align: center;">
+<figure>
+<img src="../../_static/img/OR_manual.jpg" alt="schematic" style="width:100px;">
+<img src="../../_static/img/OR_tractseg.jpg" alt="colab" style="width:100px;">
+<figcaption>Fig.7 - left: The optic radiations produced by our manual method. right: The optic radiations produced by TractSeg.</figcaption>
+</figure>
+</div>
 
+<p>Advantages of the deep learning approach...</p>
+
+<p> If you'd like try to running the pre-trained model yourself, you can find the instructions on the <a href="https://github.com/MIC-DKFZ/TractSeg"> TractSeg github page</a>. You can also experiment with the tractography settings in our manual approach to try and improve the results, for example by altering the ROIs or adding more streamlines.</p>
 
 
     <script type="text/x-thebe-config">
