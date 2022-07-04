@@ -391,7 +391,28 @@ a deep-learning method: TractSeg. </p>
 
 To remove some of these extra streamlines, we will add some <b>exclusion ROIs</b>. Any streamline that enters an exclusion mask will be discarded.</p>
 
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> tckgen -algorithm FACT -seed_image thalamus_mask.nii.gz -include target.nii.gz -exclude exclude_1.nii.gz -exclude exclude_2.nii.gz -exclude exclude_3.nii.gz peaks.nii.gz optic_radiation_2.tck
+<p>Use the ROI editor tool to create:
+
+<ul>
+  <li>One coronal mask in front of the thalamus.</li>
+  <li>One axial mask above the thalamus.</li>
+  <li>One axial mask below the thalamus</li>
+  <li>One sagittal between the two hemispheres of the brain</li>
+</ul>
+
+Look at Figure 6 for placement if you are unsure.
+Save them as exclude_1.nii.gz, exclude_2.nii.gz, exclude_3.nii.gz and exclude_4.nii.gz.</p>
+
+<div style="text-align: center;">
+<figure>
+<img src="../../_static/img/exclusion_masks.jpg" alt="colab" style="width:461px">
+<figcaption>Fig.6 - Creating the exclusion ROIs in mrview.</figcaption>
+</figure>
+</div>
+
+<p>Now run tractography again with the new exclusion masks:</p>
+
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> tckgen -algorithm FACT -seed_image thalamus_mask.nii.gz -include target.nii.gz -exclude exclude_1.nii.gz -exclude exclude_2.nii.gz -exclude exclude_3.nii.gz -exclude exclude_4.nii.gz peaks.nii.gz optic_radiation_2.tck
 </pre></div>
 </div>
 
