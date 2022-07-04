@@ -331,15 +331,24 @@ a deep-learning method: TractSeg. </p>
 <div style="text-align: center;">
 <figure>
 <img src="../../_static/img/mrview_thalamus.jpg" alt="colab" style="width:461px;height:350px;">
-<figcaption>Fig.2 - looking at the thalamus atlas in movies.</figcaption>
+<figcaption>Fig.2 - looking at the thalamus atlas in mrtrix.</figcaption>
 </figure>
 </div>
 
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> here is an example piece of code
+<div>
+<p> This is a probabilistic atlas - where the higher values indicate voxels that are more likely to be in the thalamus. </p> 
+</div>
+
+<div>
+<p>Mrtrix requires a binary seed mask, so we will need to threshold and binarise the thalamus atlas to make our seed. You can experiment with different thresholds in mrview until you find one you are happy with. We will then use <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/mrthreshold.html"> mrthreshold</a> to generate the mask. Using the terminal, cd to the directory containing your data, and run the following:</p>
+</div>
+
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> mrthreshold -abs <your threshold value> Thalamus-prob-1mm.nii.gz thalamus_mask.nii.gz
 </pre></div>
 </div>
 
-<p>Here is an example link <a href="https://diffusion-tractography.github.io"> https://diffusion-tractography.github.io </a></p>
+<p>To run the tractography we will be using <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/tckgen.html"> tckgen </a>. </p>
+
 
 
 
