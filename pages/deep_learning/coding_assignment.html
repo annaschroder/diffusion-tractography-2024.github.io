@@ -418,7 +418,7 @@ Save them as exclude_1.nii.gz and exclude_2.nii.gz (The order doesn't really mat
 </pre></div>
 </div>
 
-<p>Open the new file in mrview and take a look. You should be able to clearly see the optic radiation bundles now, with fewer erroneous streamlines. </p>
+<p>Open the new file in mrview and take a look. You should be able to see the difference to "optic_radiation_1", with fewer erroneous streamlines. There are still plenty of false positives left though - if you have time you can try adding some extra exclusion masks to remove these.</p>
 
 
 <p>We can now compare our results with the results from TractSeg. We have already run TractSeg on this dataset and saved the results in the googledrive to save time. If you'd like try to running the pre-trained model yourself, you can find the instructions on the <a href="https://github.com/MIC-DKFZ/TractSeg"> TractSeg github page</a>. The tractography results are in "Peaks_FACT_trackings", and the optic radiation files are "OR_left.tck", and "OR_right.tck". You can also find the binary masks for each tract in "bundle_segmentations". Open them in mrview and compare to your results.</p>
