@@ -303,7 +303,7 @@
 <p>Congratulations on making it through the week! In this practical, we will be segmenting a white matter bundle and comparing our results to those from 
 a deep-learning method: TractSeg. </p>
 
-<p> The white matter fibres in the brain are organised into bundles that connect different brain regions. The large fibre bundles in the brain have been characterised by neuroanatomists, using post-mortem dissection. However, we can use tractography to map these bundles non-invasively from diffusion MRI data. In this practical we will try and delineate the optic radiation (sometimes called the posterior thalamic radiation), a tract that connects the thalamus to the visual cortex. It transmits visual information from the retina to the visual cortex, where it can be processed.</p> 
+<p> The white matter fibres in the brain are organised into bundles that connect different brain regions. The large fibre bundles in the brain have been characterised by neuroanatomists, using post-mortem dissection. However, we can use tractography to map these bundles non-invasively from diffusion MRI data. In this practical we will try and delineate the optic radiation (sometimes called the posterior thalamic radiation), a tract that connects the thalamus to the visual cortex. It helps transmit visual information from the retina to the visual cortex, where it can be processed.</p> 
 
 
 
@@ -322,7 +322,7 @@ a deep-learning method: TractSeg. </p>
 </div>
 
 <div>
-<p> To map the optic radiation, we need to define a <b>seed region</b> to start the streamlines. This will be located at the thalamus (the optic radiation actually starts in the lateral geniculate nucleus of the thalamus, but to keep things simple we will ignore this detail for now). You can google the thalamus to find out more about its function in the brain, and where it is located.</p> 
+<p> To map the optic radiation, we need to define a <b>seed region</b> to start the streamlines. This will be located at the thalamus (the optic radiation actually starts in the lateral geniculate nucleus of the thalamus, but to keep things simple we will ignore this detail for now). The thalamus is a a grey matter structure located in the centre of the brain, which relays sensory information to the cerebral cortex.</p> 
 </div>
 
 <div>
@@ -338,7 +338,7 @@ a deep-learning method: TractSeg. </p>
 
 
 <div>
-<p>Mrtrix requires a binary seed mask for tractography, so we will need to <b>threshold</b> and <b>binarise</b> the thalamus atlas. You can experiment with different thresholds in mrview until you find one you are happy with. We will then use <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/mrthreshold.html"> mrthreshold</a> to generate the mask. Using the terminal, cd to the directory containing your data, and run the following to create a binary mask called thalamus_mask.nii.gz:</p>
+<p>Mrtrix requires a binary seed mask for tractography, so we will need to <b>threshold</b> and <b>binarise</b> the thalamus atlas. You can experiment with different thresholds in mrview to find one you are happy with. We want a fairly conservative mask that includes the main thalamus structure, while removing the noisy, low probability regions around the periphery - a value around 20 should work well. We will then use <a href="https://mrtrix.readthedocs.io/en/latest/reference/commands/mrthreshold.html"> mrthreshold</a> to generate the mask. Using the terminal, cd to the directory containing your data, and run the following to create a binary mask called thalamus_mask.nii.gz:</p>
 </div>
 
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> mrthreshold -abs "your threshold value" Thalamus-prob-1mm.nii.gz thalamus_mask.nii.gz
@@ -366,7 +366,7 @@ a deep-learning method: TractSeg. </p>
 </div>
 
 <div>
-<p>First of all, we want to make sure that we only include the streamlines that travel in a posterior direction (backwards) from the thalamus towards the visual cortex. We will use mrview to generate an <b>inclusion ROI</b> plane for this. In other words, we will only include streamlines that pass through this mask. Go to Tool->ROI editor and click the green cross in the ROI editor tab to make a new file. Next, move your mouse to select a suitable coronal plane in the visual cortex (see figure 5 for inspiration). Then go to the ROI editor tab and click "edit", then "fill" so that you are using the fill tool. Click anywhere in your coronal plane (top left panel) to make your ROI. Now, save it as "inclusion.nii.gz" using the save icon in the ROI editor tab. You can use the undo button if you make a mistake.</p>
+<p>First of all, we want to make sure that we only include the streamlines that travel in a posterior direction (backwards) from the thalamus towards the visual cortex. We will use mrview to generate an <b>inclusion ROI</b> plane for this. In other words, we will only include streamlines that pass from the seed region through this mask. Go to Tool->ROI editor and click the green cross in the ROI editor tab to make a new file. Next, move your mouse to select a suitable coronal plane in the visual cortex (see figure 5 for inspiration). Then go to the ROI editor tab and click "edit", then "fill" so that you are using the fill tool. Click anywhere in your coronal plane (top left panel) to make your ROI. Now, save it as "inclusion.nii.gz" using the save icon in the ROI editor tab. You can use the undo button if you make a mistake.</p>
 </div>
 
 <div style="text-align: center;">
@@ -384,36 +384,41 @@ a deep-learning method: TractSeg. </p>
 </pre></div>
 </div>
 
-<p>If you open the output file "optic_radiation_1.tck" you will see that the results are quite messy (click Tool->tractography, and then open the file in the Tractography tab).
+<p>If you open the output file "optic_radiation_1.tck" you will see that the results are quite messy (click Tool->tractography, and then open the file in the Tractography tab).</p>
 
-To remove some of these extra streamlines, we will add some <b>exclusion ROIs</b>. Any streamline that enters an exclusion mask will be discarded.</p>
+<div style="text-align: center;">
+<figure>
+<img src="../../_static/img/optic_radiation_fp.jpg" alt="colab" style="width:550px">
+<figcaption>Fig.6 - Initial tractography results. We have successfully mapped the optic radiation bundles (green arrows), but there are lots of false-positive streamlines that we would like to remove (eg. red arrows).</figcaption>
+</figure>
+</div>
+
+<p>To remove some of these extra streamlines, we will add some <b>exclusion ROIs</b>. Any streamline that enters an exclusion mask will be discarded.</p>
 
 <p>Use the ROI editor tool to create:
 
 <ul>
-  <li>One coronal mask in front of the thalamus.</li>
-  <li>One axial mask above the thalamus.</li>
-  <li>One axial mask below the thalamus</li>
-  <li>One sagittal between the two hemispheres of the brain</li>
+  <li>One axial mask above the thalamus. This will remove the false positive streamlines in the top left panel of figure 6.</li>
+  <li>One axial mask below the thalamus. This will remove the false positive streamlines in the top right panel of figure 6.</li>
 </ul>
 
-Look at Figure 6 for placement if you are unsure.
-Save them as exclude_1.nii.gz, exclude_2.nii.gz, exclude_3.nii.gz and exclude_4.nii.gz (The order doesn't really matter here).</p>
+Look at Figure 7 for placement if you are unsure.
+Save them as exclude_1.nii.gz and exclude_2.nii.gz (The order doesn't really matter here).</p>
 
 <div style="text-align: center;">
 <figure>
 <img src="../../_static/img/exclusion_masks.jpg" alt="colab" style="width:461px">
-<figcaption>Fig.6 - Creating the exclusion ROIs in mrview.</figcaption>
+<figcaption>Fig.7 - Creating the exclusion ROIs in mrview.</figcaption>
 </figure>
 </div>
 
 <p>Now run tractography again with the new exclusion masks, saving our new results as optic_radiation_2.tck:</p>
 
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> tckgen -algorithm FACT -seed_image thalamus_mask.nii.gz -include inclusion.nii.gz -exclude exclude_1.nii.gz -exclude exclude_2.nii.gz -exclude exclude_3.nii.gz -exclude exclude_4.nii.gz peaks.nii.gz optic_radiation_2.tck
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> tckgen -algorithm FACT -seed_image thalamus_mask.nii.gz -include inclusion.nii.gz -exclude exclude_1.nii.gz -exclude exclude_2.nii.gz peaks.nii.gz optic_radiation_2.tck
 </pre></div>
 </div>
 
-<p>Open the new file in mrview and take a look. You should be able to clearly see the optic radiation bundles now, with fewer erroneous streamlines. </p>
+<p>Open the new file in mrview and take a look. You should be able to see the difference to "optic_radiation_1", with fewer erroneous streamlines. There are still plenty of false positives left though - if you have time you can try adding some extra exclusion masks to remove these.</p>
 
 
 <p>We can now compare our results with the results from TractSeg. We have already run TractSeg on this dataset and saved the results in the googledrive to save time. If you'd like try to running the pre-trained model yourself, you can find the instructions on the <a href="https://github.com/MIC-DKFZ/TractSeg"> TractSeg github page</a>. The tractography results are in "Peaks_FACT_trackings", and the optic radiation files are "OR_left.tck", and "OR_right.tck". You can also find the binary masks for each tract in "bundle_segmentations". Open them in mrview and compare to your results.</p>
@@ -422,7 +427,7 @@ Save them as exclude_1.nii.gz, exclude_2.nii.gz, exclude_3.nii.gz and exclude_4.
 <figure>
 <img src="../../_static/img/OR_manual.jpg" alt="schematic" style="width:200px;">
 <img src="../../_static/img/OR_tractseg.jpg" alt="colab" style="width:200px;">
-<figcaption>Fig.7 - left: The optic radiations produced by our manual method. right: The optic radiations produced by TractSeg.</figcaption>
+<figcaption>Fig.8 - left: The optic radiations produced by our manual method. right: The optic radiations produced by TractSeg.</figcaption>
 </figure>
 </div>
 
