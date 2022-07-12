@@ -343,19 +343,19 @@
                 
   <div class="section" id="preprocessing">
 <h1>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h1>
-<p><em>by Lawrence Binding</em></p>
+<p><em>by Lawrence Binding and Ellie Thompson</em></p>
 <div class="tip admonition">
 <p class="admonition-title">Estimated Time</p>
 <p>30-120 minutes</p>
 </div>
 <div class="danger admonition">
 <p class="admonition-title">Installation REQUIREMENTS</p>
-<p>This section requires MRtrix3 &amp; FSL to be installed and works best with a real brain scan!!</p>
+<p>This section requires MRtrix3 &amp; FSL to be installed and works best with a real brain scan! We will be using the fibre cup phantom during the practical for speed, but the figures show what the results would look like on a real scan.</p>
 </div>
 <p>So MRtrix3 is run through lines of code, this can be slightly daunting at first but allows us more freedom when running tractography on large datasets. If you are unfamiliar with how to use the terminal (Mac) or MSYS2 (Windows) then please see the bash introduction page for a quick how-to.</p>
 <p>You can access the data for today's practical <a href="https://drive.google.com/drive/folders/1NVUnt4vyMQq61KDizWUjUVteHCYcYcce?usp=sharing"> here</a>.</p>
 
-<p>The first thing we need to do with our diffusion data is to clean it. Diffusion data is messy, very messy and the signal to noise radio is small, very small. The best way we can improve this is by using various correction methods on our diffusion data.</p>
+<p>The first thing we need to do with our diffusion data is to clean it. Diffusion data is very messy and the signal to noise radio very small. The best way we can improve this is by using various correction methods on our diffusion data.</p>
 <style>
 h1 {text-align: center;}
 h2 {text-align: center;}
@@ -398,10 +398,11 @@ mrview noise.mif denoise_difference.mif
 <hr class="docutils" />
 <div class="section" id="gibbs-ringing-correction">
 <h2>Gibbs Ringing Correction<a class="headerlink" href="#gibbs-ringing-correction" title="Permalink to this headline">¶</a></h2>
-<p>Next we need to remove Gibb’s ringing artifacts. These occur due to limitations in the fourier transformation.</p>
+<p>Next we need to remove Gibb’s ringing artifacts. These occur due to limitations in the fourier transformation used to reconstruct the MRI image. You can learn more about the Gibb's artifact <a href="https://mriquestions.com/gibbs-artifact.html">here</a>.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrdegibbs fibrecup_denoise.mif fibrecup_denoise_gibbs.mif
 </pre></div>
 </div>
+
 <p>To check our results, we can culate the difference and inspect them.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrcalc fibrecup_denoise.mif fibrecup_denoise_gibbs.mif -subtract residual.mif
 mrview fibrecup_denoise_gibbs.mif residual.mif
@@ -412,26 +413,30 @@ mrview fibrecup_denoise_gibbs.mif residual.mif
 <figcaption>Fig.2 - Before (left) and after (right) using mrdegibbs.</figcaption>
 </figure>
 </div>
+
 <hr class="docutils" />
 <div class="section" id="distortion-correction-eddy">
 <h2>Distortion correction [EDDY]<a class="headerlink" href="#distortion-correction-eddy" title="Permalink to this headline">¶</a></h2>
-<p>NOTE: THIS TAKES AGES! Don’t attempt this on fibrecup!</p>
-<p>There are several different methods of correcting for distortions induced by motion and eddy all with different advantages/disadvantages. Synb0-DISCO is a newer method which doesn’t require any additional acquisitions in scanner not only saving time but also retrospective data. However, this is run in Docker and we don’t have time to tell you about this. Instead we’re going to be using a tool called EDDY which is packaged in MRtrix3 as dwipreproc.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwipreproc fibrecup_denoise_gibbs.mif fibrecup_denoise_gibbs_preproc.mif -rpe_none -pe_dir ap
+
+<p>NOTE: THIS TAKES AGES! Don’t attempt this on fibrecup! We done this step in advance and have included the distortion corrected image for you in the googledrive (fibrecup_denoise_gibbs_preproc.mif)" r</p>
+<p>Eddy currents are unwanted currents induced during the scanning process by the rapidly varying magnetic field gradients. There are several different methods of correcting for distortions induced by motion and eddy currents, all with different advantages/disadvantages.  We’re going to be using a tool called <a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy"> EDDY</a> which is packaged in MRtrix3 as dwifslpreproc.</p>
+
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwifslpreproc fibrecup_denoise_gibbs.mif fibrecup_denoise_gibbs_preproc.mif -rpe_none -pe_dir ap
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>-rpe_none: is telling dwipreproc we don’t have a reverse phase encoding gradient</p></li>
-<li><p>-pe_dir: is telling dwipreproc the acquisition direction (anterior-posterior) (fibrecup doesn’t actually have an aqusition method so its here just for demonstration)</p></li>
+<li><p>-rpe_none: is telling dwifslpreproc we don’t have a reverse phase encoding gradient</p></li>
+<li><p>-pe_dir: is telling dwifslpreproc the acquisition direction (anterior-posterior) (fibrecup doesn’t actually have an acquisition method so its here just for demonstration)</p></li>
 </ul>
 <figure>
 <img src="../../_static/img/eddy.png" alt="colab" style="width:435px;height:278px;">
-<figcaption>Fig.3 - Before (left) and after (right) using dwipreproc.</figcaption>
+<figcaption>Fig.3 - Before (left) and after (right) using dwifslpreproc.</figcaption>
 </figure>
 </div>
+
 <div class="section" id="field-bias-correction">
 <h2>Field Bias Correction<a class="headerlink" href="#field-bias-correction" title="Permalink to this headline">¶</a></h2>
-<p>To improve brain mask estimation and comparison between subjects, we need to run a bias field correction which will normalise the image.</p>
+<p>To improve brain mask estimation and comparison between subjects, we need to run a bias field correction which will normalise the image and correct for any inhomogeneities in our magnetic field.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwibiascorrect -fsl fibrecup_denoise_gibbs_preproc.mif fibrecup_denoise_gibbs_preproc_biasCorr.mif -bias bias.mif 
 </pre></div>
 </div>
@@ -461,7 +466,8 @@ mrview fibrecup_denoise_gibbs.mif residual.mif
 <ul class="simple">
 <li><p>https://mrtrix.readthedocs.io/en/latest/reference/commands/dwidenoise.html</p></li>
 <li><p>https://mrtrix.readthedocs.io/en/latest/reference/commands/mrdegibbs.html</p></li>
-<li><p>https://mrtrix.readthedocs.io/en/3.0_rc1/reference/scripts/dwipreproc.html</p></li>
+<li><p>https://mrtrix.readthedocs.io/en/latest/reference/commands/dwifslpreproc.html</p></li>
+<li><p>https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy</p></li>
 <li><p>https://mrtrix.readthedocs.io/en/latest/reference/commands/dwibiascorrect.html</p></li>
 </ul>
 </div>
