@@ -309,8 +309,8 @@ h2 {text-align: center;}
 <hr class="docutils" />
 <div class="section" id="atlas">
 <h2>Atlas<a class="headerlink" href="#atlas" title="Permalink to this headline">¶</a></h2>
-<p>To generate our connectome, we need to have an atlas. A cortical atlas typically contain the cortex split up into functional or anatomical regions. Each region has a unique number assigned to it. There are hundreds of different types of atlas out there, the decision on which one to use will largely depend on what you intend to measure. Thankfully, we don’t have that much decision when it comes to the fibrecup phantom. Located in the connectome/ folder is a file called “fibre_parc.nii.gz”. Open it in overlay, and disable interpolation (located in: tools &gt; overlay, bottom of the pannel). Hover over each region and at the bottom left it tells you the number of each region its assigned to. The “fibre_parc.txt” is a text file which tells you where each region is located. Every atlas should come with one of these.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrview fibrecup_denoise_gibbs_preproc_biaCorr.mif -load.overlay connectome/fibre_parc.nii.gz 
+<p>To generate our connectome, we need to have an atlas. A cortical atlas typically contain the cortex split up into functional or anatomical regions. Each region has a unique number assigned to it. There are hundreds of different types of atlas out there, the decision on which one to use will largely depend on what you intend to measure. Thankfully, we don’t have that much decision when it comes to the fibrecup phantom. Located in the drive folder is a file called “fibre_parc.nii.gz”. Open it in overlay, and disable interpolation (located in: tools &gt; overlay, bottom of the panel). Hover over each region and at the bottom left it tells you the number of each region its assigned to.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrview fibrecup_denoise_gibbs_preproc_biasCorr.mif -overlay.load fibre_parc.nii.gz 
 </pre></div>
 </div>
 <figure>
@@ -320,7 +320,7 @@ h2 {text-align: center;}
 </div>
 <div class="section" id="id1">
 <h2>Connectome Generation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>So lets move onto generating our connectome. We can do so using the tck2connectome command:</p>
+<p>So let's move onto generating our connectome. We can do so using the tck2connectome command:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tck2connectome -symmetric -zero_diagonal tcks_10k.tck fibre_parc.nii.gz connectome.csv 
 </pre></div>
 </div>
