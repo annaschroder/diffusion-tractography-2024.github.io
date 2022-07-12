@@ -331,12 +331,12 @@ h2 {text-align: center;}
 <hr class="docutils" />
 <div class="section" id="data-identification">
 <h2>Data identification<a class="headerlink" href="#data-identification" title="Permalink to this headline">¶</a></h2>
-<p>Before we decide which postprocessing method to use, we need to identify if our data was acquired with multiple b-values. Different types of tissue are sensitive to different strengths of diffusion gradient (b-values). We can tell this by looking at our b-value file and seeing if there is more than 2 unique values (e.g., 0, 1000, 2000, etc.). Our fibrecup has only one value and as such we need to use single-shell CSD. Other methods of multi-shell are available, I would investigate their website (bottom) for more options.</p>
+<p>Before we decide which fibre estimation method to use, we need to identify if our data was acquired with multiple b-values. Different types of tissue are sensitive to different strengths of diffusion gradient (b-values). We can tell this by looking at our b-value file and seeing if there is more than 2 unique values (e.g., 0, 1000, 2000, etc.). Our fibrecup has only one value and as such we need to use single-shell CSD. Other methods for multi-shell data are available, I would investigate their website (bottom) for more options.</p>
 </div>
 <hr class="docutils" />
-<div class="section" id="singleshell-csd">
-<h2>SingleShell CSD<a class="headerlink" href="#singleshell-csd" title="Permalink to this headline">¶</a></h2>
-<p>The advanced method we’re going to use is constrained spherical deconvolution (CSD). This method elimiates all priors but one: All white matter shares identical diffusion characteristics. As such, diffusion is mapped over a sphere of response function with the fibre orinetation density function (ODF). First we need to estimate our responses function with: [note: mkdir means create directory]</p>
+<div class="section" id="singletissue-csd">
+<h2>Single Tissue CSD<a class="headerlink" href="#singletissue-csd" title="Permalink to this headline">¶</a></h2>
+<p>The advanced method we’re going to use is constrained spherical deconvolution (CSD). This method eliminates all priors but one: All white matter shares identical diffusion characteristics. As such, diffusion is mapped over a sphere of response function with the fibre orientation density function (ODF). First we need to estimate our responses function with the following command: [note: mkdir means create directory]</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir tournier
 dwi2response tournier fibrecup_denoise_gibbs_preproc_biasCorr.mif tournier/wm.txt
 </pre></div>
@@ -355,9 +355,9 @@ dwi2response tournier fibrecup_denoise_gibbs_preproc_biasCorr.mif tournier/wm.tx
 </figure>
 ---
 </div>
-<div class="section" id="multishell-csd">
-<h2>MultiShell CSD<a class="headerlink" href="#multishell-csd" title="Permalink to this headline">¶</a></h2>
-<p>Where Multishell differs from single Shell CSD is its ability to only estimate white matter. CSD rests upon the assumption that all white matter is the same, not the entire brain is the same! Multishell CSD takes advantage of the fact different tissues have different diffusion principals so we can estimate WM, GM, and CSF seperately! This comes with the benefit of improved estimation! We can do this by:</p>
+<div class="section" id="multitissue-csd">
+<h2>Multi Tissue CSD<a class="headerlink" href="#multitissue-csd" title="Permalink to this headline">¶</a></h2>
+<p>Where multi-tissue differs from single-tissue CSD is its ability to only estimate white matter response function. CSD rests upon the assumption that all white matter is the same, not the entire brain is the same! Multi-tissue CSD takes advantage of the fact different tissues have different diffusion characteristics so we can estimate WM, GM, and CSF separately! This comes with the benefit of improved estimation! We can do this by:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir dhollander
 dwi2response dhollander fibrecup_denoise_gibbs_preproc_biasCorr.mif dhollander/wm.txt dhollander/gm.txt dhollander/csf.txt
 </pre></div>

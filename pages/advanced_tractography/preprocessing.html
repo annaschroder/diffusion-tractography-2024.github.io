@@ -418,7 +418,7 @@ mrview fibrecup_denoise_gibbs.mif residual.mif
 <div class="section" id="distortion-correction-eddy">
 <h2>Distortion correction [EDDY]<a class="headerlink" href="#distortion-correction-eddy" title="Permalink to this headline">¶</a></h2>
 
-<p>NOTE: THIS TAKES AGES! Don’t attempt this on fibrecup! We done this step in advance and have included the distortion corrected image for you in the googledrive (fibrecup_denoise_gibbs_preproc.mif)" r</p>
+<p>NOTE: THIS TAKES AGES! Don’t attempt this on fibrecup! We done this step in advance and have included the distortion corrected image for you in the googledrive (fibrecup_denoise_gibbs_preproc.mif)".</p>
 <p>Eddy currents are unwanted currents induced during the scanning process by the rapidly varying magnetic field gradients. There are several different methods of correcting for distortions induced by motion and eddy currents, all with different advantages/disadvantages.  We’re going to be using a tool called <a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy"> EDDY</a> which is packaged in MRtrix3 as dwifslpreproc.</p>
 
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwifslpreproc fibrecup_denoise_gibbs.mif fibrecup_denoise_gibbs_preproc.mif -rpe_none -pe_dir ap
