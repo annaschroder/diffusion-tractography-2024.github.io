@@ -338,12 +338,14 @@ h2 {text-align: center;}
 <h2>Single Tissue CSD<a class="headerlink" href="#singletissue-csd" title="Permalink to this headline">¶</a></h2>
 <p>The advanced method we’re going to use is constrained spherical deconvolution (CSD). This method eliminates all priors but one: All white matter shares identical diffusion characteristics. As such, diffusion is mapped over a sphere of response function with the fibre orientation density function (ODF). </p>
 
+<div style="text-align: center;">
 <figure>
-<img src="../../_static/img/spherical_deconv.png" alt="colab" style="width:461px;height:383px;">
+<img src="../../_static/img/spherical_deconv.png" alt="colab" style="width:461px;">
 <figcaption>Fig.1 - Signals from two fibre populations (S<sub>1</sub> and S<sub>2</sub>) can be summed to produce the
 measured diffusion signal S<sub>tot</sub>, which is also the convolution of the fibre response function
 with the fODF. Reproduced from (Dell’Acqua and Tournier, 2019).</figcaption>
 </figure>
+</div>
 
 <p>First we need to estimate our responses function with the following command: [note: mkdir means create directory]</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir tournier
@@ -358,10 +360,12 @@ dwi2response tournier fibrecup_denoise_gibbs_preproc_biasCorr.mif tournier/wm.tx
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrview fibrecup_denoise_gibbs_preproc_biasCorr.mif -odf.load_sh tournier/wm.mif 
 </pre></div>
 </div>
+<div style="text-align: center;">
 <figure>
 <img src="../../_static/img/odf.png" alt="colab" style="width:461px;height:383px;">
 <figcaption>Fig.2 - Showing fibre orientation direction after estimation.</figcaption>
 </figure>
+</div>
 ---
 </div>
 <div class="section" id="multitissue-csd">
