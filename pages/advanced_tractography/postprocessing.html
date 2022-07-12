@@ -336,7 +336,8 @@ h2 {text-align: center;}
 <hr class="docutils" />
 <div class="section" id="singletissue-csd">
 <h2>Single Tissue CSD<a class="headerlink" href="#singletissue-csd" title="Permalink to this headline">¶</a></h2>
-<p>The advanced method we’re going to use is constrained spherical deconvolution (CSD). This method eliminates all priors but one: All white matter shares identical diffusion characteristics. As such, diffusion is mapped over a sphere of response function with the fibre orientation density function (ODF). </p>
+<p>The advanced method we’re going to use is constrained spherical deconvolution (CSD). This method eliminates all priors but one: All white matter shares identical diffusion characteristics. As such, the diffusion signal is assumed to be the convolution of a fibre response function with the fibre orientation density function (ODF). The fODF is then obtained by deconvolving the measured signal with the fibre
+response function.</p>
 
 <div style="text-align: center;">
 <figure>
@@ -347,7 +348,7 @@ with the fODF. Reproduced from (Dell’Acqua and Tournier, 2019).</figcaption>
 </figure>
 </div>
 
-<p>First we need to estimate our responses function with the following command: [note: mkdir means create directory]</p>
+<p>First we need to estimate our response function with the following command: [note: mkdir means create directory]</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir tournier
 dwi2response tournier fibrecup_denoise_gibbs_preproc_biasCorr.mif tournier/wm.txt
 </pre></div>
