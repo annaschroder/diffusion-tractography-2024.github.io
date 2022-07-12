@@ -437,11 +437,11 @@ mrview fibrecup_denoise_gibbs.mif residual.mif
 <div class="section" id="field-bias-correction">
 <h2>Field Bias Correction<a class="headerlink" href="#field-bias-correction" title="Permalink to this headline">¶</a></h2>
 <p>To improve brain mask estimation and comparison between subjects, we need to run a bias field correction which will normalise the image and correct for any inhomogeneities in our magnetic field.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwibiascorrect -fsl fibrecup_denoise_gibbs_preproc.mif fibrecup_denoise_gibbs_preproc_biasCorr.mif -bias bias.mif 
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwibiascorrect fsl fibrecup_denoise_gibbs_preproc.mif fibrecup_denoise_gibbs_preproc_biasCorr.mif -bias bias.mif -mask wm_mask.nii.gz
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>-fsl is telling the software to use fsl method of bias correction, you can also use -ants.</p></li>
+<li><p>-fsl is telling the software to use fsl method of bias correction, you can also use ants.</p></li>
 </ul>
 <p>To check the bias field we just load that into mrview.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrview bias.mif -colourmap <span class="m">2</span>  
