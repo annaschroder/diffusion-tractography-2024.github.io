@@ -321,17 +321,22 @@ h2 {text-align: center;}
 <div class="section" id="id1">
 <h2>Connectome Generation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>So let's move onto generating our connectome. We can do so using the tck2connectome command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tck2connectome -symmetric -zero_diagonal tcks_10k.tck fibre_parc.nii.gz connectome.csv 
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tck2connectome -symmetric -zero_diagonal tcks_10k.tck fibre_parc.nii.gz MRconnectome.csv 
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>-symmetric is asking it to return a symmetrical matrix</p></li>
-<li><p>-zero_diagonal is asking it to not return connection-to-connection results.</p></li>
+<li><p>-zero_diagonal is asking it to not return results connecting a parcel to itself.</p></li>
 </ul>
+<p>If you downloaded your tractography result from yesterday's python exercise, you can also use this to generate a connectome to compare with the one from mrtrix. (We have also included this in the google drive folder).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tck2connectome -symmetric -zero_diagonal python_1k_streamlines.tck fibre_parc.nii.gz PY_connectome.csv 
+</pre></div>
+</div>
+
 </div>
 <div class="section" id="connectome-inspection">
 <h2>Connectome inspection<a class="headerlink" href="#connectome-inspection" title="Permalink to this headline">¶</a></h2>
-<p>Open up the CSV sheet in Excel,</p>
+<p>Open up the CSV sheet in Excel. There should be a square array of numbers and lots of zeros. The numbers represent the number of streamlines connecting each pair of regions in the atlas. You can see that the connectome is symmetric about the diagonal.</p>
 <style>
   .iframe-container {
 		text-align:center;
