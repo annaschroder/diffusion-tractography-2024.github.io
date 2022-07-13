@@ -353,7 +353,7 @@
 <p>This section requires MRtrix3 &amp; FSL to be installed and works best with a real brain scan! We will be using the fibre cup phantom during the practical for speed, but the figures show what the results would look like on a real scan.</p>
 </div>
 <p>So MRtrix3 is run through lines of code, this can be slightly daunting at first but allows us more freedom when running tractography on large datasets. If you are unfamiliar with how to use the terminal (Mac) or MSYS2 (Windows) then please see the bash introduction page for a quick how-to.</p>
-<p>You can access the data for today's practical <a href="https://drive.google.com/drive/folders/1NVUnt4vyMQq61KDizWUjUVteHCYcYcce?usp=sharing"> here</a>.</p>
+<p>You can access the data for today's practical <a href="https://drive.google.com/drive/folders/1NVUnt4vyMQq61KDizWUjUVteHCYcYcce?usp=sharing"> here</a>. You will need to download this data to your computer and then run the following commands from the directory containing the files.</p>
 
 <p>The first thing we need to do with our diffusion data is to clean it. Diffusion data is very messy and the signal to noise radio very small. The best way we can improve this is by using various correction methods on our diffusion data.</p>
 <style>
@@ -418,7 +418,7 @@ mrview fibrecup_denoise_gibbs.mif residual.mif
 <div class="section" id="distortion-correction-eddy">
 <h2>Distortion correction [EDDY]<a class="headerlink" href="#distortion-correction-eddy" title="Permalink to this headline">¶</a></h2>
 
-<p>NOTE: THIS TAKES AGES! Don’t attempt this on fibrecup! We done this step in advance and have included the distortion corrected image for you in the googledrive (fibrecup_denoise_gibbs_preproc.mif)".</p>
+<p><b>NOTE: THIS TAKES AGES! Don’t attempt this on fibrecup! </b> We have done this step in advance and have included the distortion corrected image for you in the googledrive (fibrecup_denoise_gibbs_preproc.mif)".</p>
 <p>Eddy currents are unwanted currents induced during the scanning process by the rapidly varying magnetic field gradients. There are several different methods of correcting for distortions induced by motion and eddy currents, all with different advantages/disadvantages.  We’re going to be using a tool called <a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/eddy"> EDDY</a> which is packaged in MRtrix3 as dwifslpreproc.</p>
 
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwifslpreproc fibrecup_denoise_gibbs.mif fibrecup_denoise_gibbs_preproc.mif -rpe_none -pe_dir ap
