@@ -385,11 +385,6 @@ h2 {text-align: center;}
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dwidenoise fibrecup.mif fibrecup_denoise.mif -noise noise.mif
 </pre></div>
 </div>
-<p>To check our results we need to calculate the difference between the raw and denoised images:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mrcalc fibrecup.mif fibrecup_denoise.mif -subtract denoise_difference.mif 
-mrview noise.mif denoise_difference.mif
-</pre></div>
-</div>
 <figure>
 <img src="../../_static/img/dwidenoise.png" alt="colab" style="width:396px;height:239px;">
 <figcaption>Fig.1 - Before (left) and after (right) using dwidenoise.</figcaption>
